@@ -1,0 +1,24 @@
+'use strict'
+const keytokenModel = require("../models/keytoken.model");
+const { createMeatPigHeard } = require("../models/repositories/meatPigHerd.repo");
+const { Types } = require('mongoose')
+class MeatPigHerdService {
+
+    static createMeatPigHead = async ({pen_id,morther,birth_date,quantity,note}) =>{
+        if(!pen_id) throw new Error("Missing required field: pen_id")
+        if(!morther) throw new Error("Missing required field: morther")
+        if(!birth_date) throw new Error("Missing required field: birth_date")
+        if(!quantity) throw new Error("Missing required field: quantity")
+        const body = await createMeatPigHeard({
+                                pen_id,
+                                morther,
+                                birth_date,
+                                quantity,
+                                note : note })
+        return body;
+    }    
+
+    
+}
+
+module.exports = MeatPigHerdService

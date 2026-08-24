@@ -33,6 +33,7 @@
   },
   "devDependencies": {
     "compression": "^1.7.4",
+    "eslint": "^10.8.1",
     "morgan": "^1.10.0",
     "nodemon": "^3.0.1"
   }

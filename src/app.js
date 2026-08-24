@@ -17,7 +17,7 @@ app.use(express.urlencoded(({
 require('./dbs/init.mongodb')
 const { countConnect , checkOverLoad } = require('./helpers/check.connect')
 // checkOverLoad();
-const Router = require('./routes/index')
+const Router = require('./routers/index')
 
 //Init router
 Router.init(app)
