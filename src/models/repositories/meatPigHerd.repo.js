@@ -1,7 +1,6 @@
 'use strict'
 
-const { MeatPigHerd } = require('../MeatPigHerd.model')
-const { Types } = require('mongoose')
+const { MeatPigHerd } = require('../meatPigHerd.model')
 const { getselectData ,unGetselectData,convertToObjectIdMongdb } = require('../../utils/index')
 
 /*

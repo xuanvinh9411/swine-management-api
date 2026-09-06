@@ -2,11 +2,11 @@
 const express = require('express')
 const router = express.Router()
 
-const { apiKey } = require('../auth/checkAuth')
+const swineRouter = require('./swine.router')
 
 module.exports.init = (app) =>{
     // app.use(apiKey);
-    // app.use('/v1/api',accessRouter);
+    app.use('/api/swine',swineRouter);
     app.get('/', (req, res) => {
         res.send('Hello SI');
     });

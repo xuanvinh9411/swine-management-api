@@ -1,7 +1,7 @@
 'use strict'
 
 const { OKE , CREATED ,SuccessResponse } = require('../core/success.response')
-
+const MeatPigHerdService = require('../services/meatPigHerd.service')
 class SwineController {
 
     createSwine = async ( req, res, next) =>{

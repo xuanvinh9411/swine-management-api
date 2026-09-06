@@ -22,8 +22,7 @@ const VaccineRecordSchema = new Schema(
             type: String,
             default: null,
         },
-    },
-    { _id: true }
+    }
 );
 
 // --- Main Schema
@@ -43,7 +42,7 @@ const MeatPigHerdSchema = new Schema(
             type: String,
         },
         birth_date: {
-            type: Date,
+            type: Number,
             required: [true, 'Birth date or catch date is required'],
         },
         // Ngày cai sữa 
@@ -52,7 +51,9 @@ const MeatPigHerdSchema = new Schema(
             default: null,
         },
         vaccine_records: {
-            type: [{...VaccineRecordSchema,active: {type:Boolean,default:false}}],
+            type: [{VaccineRecordSchema,
+                active: {type:Boolean,default:false}
+            }],
             default: [],
         },
         quantity: {
@@ -73,29 +74,31 @@ const MeatPigHerdSchema = new Schema(
 );
 
 // --Validation: weaning_date > birth_date ----
-MeatPigHerdSchema.pre('validate', function (next) {
-    if (this.weaning_date && this.weaning_date <= this.birth_date) {
-        this.invalidate('weaning_date', 'Weaning date must be after birth date');
-    }
-    if (this.weaning_date && this.weaning_date > Date.now()) {
-        this.invalidate('weaning_date', 'Weaning date must be in the past');
-    }
-    if (this.birth_date && this.birth_date > Date.now()) {
-        this.invalidate('birth_date', 'Birth date must be in the past');
-    }
-    next();
-})
+// MeatPigHerdSchema.pre('validate', function (next) {
+//     if (this.weaning_date && this.weaning_date <= this.birth_date) {
+//         this.invalidate('weaning_date', 'Weaning date must be after birth date');
+//     }
+//     if (this.weaning_date && this.weaning_date > Date.now()) {
+//         this.invalidate('weaning_date', 'Weaning date must be in the past');
+//     }
+//     if (this.birth_date && this.birth_date > Date.now()) {
+//         this.invalidate('birth_date', 'Birth date must be in the past');
+//     }
+//     next();
+// })
 
-MeatPigHerdSchema.pre('save', function (next) {
-    if (this.isNew) {
-        const d = this.birth_date;
-        const dd = String(d.getDate().padStart(2, '0'));
-        const mm = String(d.getMonth() + 1).padStart(2, '0');
-        const yy = String(d.getFullYear()).slice(-2);
-        const penIdStr = String(this.pen_id).padStart(2, '0');
-        const seqStr = String(this.seq).padStart(2, '0');
-        this._id = `${dd}${mm}${yy}_${penIdStr}_${seqStr}`;
-    }
-})
+// MeatPigHerdSchema.pre('save', function (next) {
+//     if (this.isNew) {
+//         const d = this.birth_date;
+//         const dd = String(d.getDate().padStart(2, '0'));
+//         const mm = String(d.getMonth() + 1).padStart(2, '0');
+//         const yy = String(d.getFullYear()).slice(-2);
+//         const penIdStr = String(this.pen_id).padStart(2, '0');
+//         const seqStr = String(this.seq).padStart(2, '0');
+//         this._id = `${dd}${mm}${yy}_${penIdStr}_${seqStr}`;
+//         console.log(`Generated _id for MeatPigHerd: ${this._id}`);
+//     }
+// })
 
 module.exports = mongoose.model('MeatPigHerd', MeatPigHerdSchema);
+module.exports = mongoose.model('VaccineRecor', VaccineRecordSchema);
