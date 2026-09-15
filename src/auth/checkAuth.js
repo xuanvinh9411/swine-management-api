@@ -1,52 +1,52 @@
-'use strict'
+'use strict';
 
 const HEADER = {
     API_KEY : 'x-api-key',
-    AUTHORIZATION : 'authorization'
-}
+    AUTHORIZATION : 'authorization',
+};
 
-const { findById } = require('../services/apikey.service')
+const { findById } = require('../services/apikey.service');
 const apiKey = async (req,res,next) =>{
     try {
-        const key = req.headers[HEADER.API_KEY]?.toString()
+        const key = req.headers[HEADER.API_KEY]?.toString();
         if(!key){
             return res.status(403).json({
-                message: 'Forbidden Error'
-            })
+                message: 'Forbidden Error',
+            });
         }
         //check objKey
-        const objKey = await findById(key)
+        const objKey = await findById(key);
         if(!objKey){
             return res.status(403).json({
-                message: 'Forbidden Error'
-            })
+                message: 'Forbidden Error',
+            });
         }
-        req.objKey = objKey
-        return next()
+        req.objKey = objKey;
+        return next();
     } catch (error) {
-        
+        console.error(error.message);
     }
-}
+};
 
 const permission = ( permission ) => {
     return (req,res,next) => {
         if(!req.objKey.permission){
             return res.status(403).json({
-                message: 'permission denied'
-            })
+                message: 'permission denied',
+            });
         }
-        console.log('permission::',req.objKey.permission)
-        const valiPermission = req.objKey.permission.includes(permission)
+        console.log('permission::',req.objKey.permission);
+        const valiPermission = req.objKey.permission.includes(permission);
         if(!valiPermission){
             return res.status(403).json({
-                message: 'permission denied'
-            })
+                message: 'permission denied',
+            });
         }
-        return next()
-    }
-}
+        return next();
+    };
+};
 
 module.exports = {
     apiKey,
-    permission
-}
+    permission,
+};

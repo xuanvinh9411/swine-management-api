@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "nodemon ./server.js",
     "prod": "node server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "keywords": [],
   "author": "",
@@ -32,9 +34,11 @@
     "slugify": "^1.6.6"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "compression": "^1.7.4",
-    "eslint": "^10.8.1",
+    "eslint": "^10.10.0",
     "morgan": "^1.10.0",
-    "nodemon": "^3.0.1"
+    "nodemon": "^3.0.1",
+    "prettier": "^3.9.6"
   }
 }

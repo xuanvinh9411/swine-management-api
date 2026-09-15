@@ -1,6 +1,6 @@
 'use strict';
 
-const MeatPigHerdModel = require('../meatPigHerd.model');
+const MeatPigHerd = require('../meatPigHerd.model');
 const { getselectData, unGetselectData, convertToObjectIdMongdb } = require('../../utils/index');
 
 /*
@@ -15,7 +15,7 @@ delete vaccine
 const createMeatPigHeard =  ({vaccine_id, pen_id, birth_date, quantity, weaning_date, morther, note }) => {
     try {
         
-        return  MeatPigHerdModel.create({
+        return  MeatPigHerd.create({
             pen_id: pen_id,
             birth_date,
             weaning_date,

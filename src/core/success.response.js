@@ -1,14 +1,14 @@
-'use strict'
+'use strict';
 
 const StatusCode = {
     OK : 200,
     CREATED : 201,
-}
+};
 
 const ReasonStatusCode = {
     CREATED : 'Created!',
-    OK : 'Success'
-}
+    OK : 'Success',
+};
 
 class SuccessResponse {
         constructor({message, statusCode = StatusCode.OK , reasonStatusCode = ReasonStatusCode.OK , metadata= { }}){
@@ -23,24 +23,25 @@ class SuccessResponse {
 
 class OK extends SuccessResponse {
     constructor({message, metadata}){
-       super({message,metadata})
+       super({message,metadata});
     }
 }
 
 class CREATED extends SuccessResponse {
     constructor({message, statusCode = StatusCode.CREATED , reasonStatusCode = ReasonStatusCode.CREATED , metadata}){
-       super({message,statusCode,reasonStatusCode,metadata})
+       super({message,statusCode,reasonStatusCode,metadata});
     }
 }
 
 class FORBIDDEN extends SuccessResponse {
     constructor({message, statusCode = 403 , reasonStatusCode = 'Forbidden' , metadata}){
-       super({message,statusCode,reasonStatusCode,metadata})
+       super({message,statusCode,reasonStatusCode,metadata});
     }
 }
 
 module.exports = {
     OK,
     CREATED,
-    SuccessResponse    
-}
+    SuccessResponse,    
+    FORBIDDEN
+};

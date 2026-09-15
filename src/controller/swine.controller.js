@@ -1,16 +1,16 @@
-'use strict'
+'use strict';
 
-const { OKE , CREATED ,SuccessResponse } = require('../core/success.response')
-const MeatPigHerdService = require('../services/meatPigHerd.service')
+const { OKE , CREATED ,SuccessResponse } = require('../core/success.response');
+const MeatPigHerdService = require('../services/meatPigHerd.service');
 class SwineController {
 
     createSwine = async ( req, res, next) =>{
             new CREATED({
                 message : 'Regiserted OK!',
-                metadata : await MeatPigHerdService.createMeatPigHead(req.body)
+                metadata : await MeatPigHerdService.createMeatPigHead(req.body),
             }).send(res);
 
-    }
+    };
 }
 
-module.exports = new SwineController()
+module.exports = new SwineController();

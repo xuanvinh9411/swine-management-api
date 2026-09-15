@@ -1,8 +1,8 @@
-'use strict'
-const express = require('express')
-const router = express.Router()
+'use strict';
+const express = require('express');
+const router = express.Router();
 
-const swineRouter = require('./swine.router')
+const swineRouter = require('./swine.router');
 
 module.exports.init = (app) =>{
     // app.use(apiKey);
@@ -11,5 +11,5 @@ module.exports.init = (app) =>{
         res.send('Hello SI');
     });
 
-    app.use(router)
-}
+    app.use(router);
+};

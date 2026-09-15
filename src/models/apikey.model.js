@@ -1,14 +1,14 @@
-'use strict'
+'use strict';
 
 const mongoose = require('mongoose'); // Erase if already required
-const DOCUMENT_NAME = 'ApiKey'
-const COLLECTION_NAME = 'ApiKeys'
+const DOCUMENT_NAME = 'ApiKey';
+const COLLECTION_NAME = 'ApiKeys';
 // Declare the Schema of the Mongo model
-var keyTokenSchema = new mongoose.Schema({
+const keyTokenSchema = new mongoose.Schema({
     key:{
         type:String,
         required:true,
-        unique:true
+        unique:true,
     },
     status:{
         type:Boolean,
@@ -18,10 +18,10 @@ var keyTokenSchema = new mongoose.Schema({
         type:[String],
         required:true,
         enum:['000','111','222'],
-    }
+    },
 },{
     collection : COLLECTION_NAME,
-    timestamps : true
+    timestamps : true,
 });
 
 //Export the model

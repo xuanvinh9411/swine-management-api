@@ -1,11 +1,11 @@
-'use strict'
+'use strict';
 
-const mongoose = require("mongoose");
-const {MONGO_URI,connectOptions} = require('../configs/mongodb.config')
+const mongoose = require('mongoose');
+const {MONGO_URI,connectOptions} = require('../configs/mongodb.config');
 
 class Database {
     constructor() {
-        this.connect()
+        this.connect();
     }
 
     //connect
@@ -16,17 +16,17 @@ class Database {
         }
         mongoose
             .connect(MONGO_URI,connectOptions)
-            .then(_ => console.log(`Connect Mongodb Success`))
-            .catch(err => console.error(`Erro Connect!`,err))
+            .then(_ => console.log('Connect Mongodb Success'))
+            .catch(err => console.error('Erro Connect!',err));
     }
 
     static getInstance(){
         if(!Database.instance){
-            Database.instance = new Database
+            Database.instance = new Database;
         }
-        return Database.instance
+        return Database.instance;
     }
 }
 
-const instanceMongodb = Database.getInstance()
-module.exports = instanceMongodb
+const instanceMongodb = Database.getInstance();
+module.exports = instanceMongodb;
