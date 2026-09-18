@@ -1,6 +1,7 @@
 'use strict';
 const _ = require('lodash');
 const mongoose = require('mongoose');
+const slugify = require('slugify'); // yarn add slugify
 
 const convertToObjectIdMongdb = (id) => new mongoose.Types.ObjectId(id);
 
@@ -51,6 +52,30 @@ const updateNestedObjectParser = (obj) => {
   return final;
 };
 
+
+/**
+ * Generate unique slug từ name
+ * "Áo Thun Nike" → "ao-thun-nike-x7k2"
+ */
+const generateSlug = async (name, Model, slugField = 'usr_slug') => {
+  // Chuyển tiếng Việt → không dấu + lowercase + gạch ngang
+  let slug = slugify(name, {
+    lower: true,
+    strict: true,   // bỏ ký tự đặc biệt
+    locale: 'vi',   // hỗ trợ tiếng Việt
+  });
+
+  // Kiểm tra trùng trong DB
+  const existed = await Model.findOne({ [slugField]: slug }).lean();
+  if (existed) {
+    // Thêm random suffix nếu trùng
+    const suffix = Math.random().toString(36).substring(2, 6); // vd: "x7k2"
+    slug = `${slug}-${suffix}`;
+  }
+
+  return slug;
+};
+
 module.exports = {
   getIntoData,
   getselectData,
@@ -58,4 +83,5 @@ module.exports = {
   removeUndefinedObject,
   updateNestedObjectParser,
   convertToObjectIdMongdb,
+  generateSlug,
 };
