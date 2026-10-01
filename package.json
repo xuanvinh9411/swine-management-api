@@ -8,7 +8,8 @@
     "prod": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "lint:quit": "eslint . --quiet"
   },
   "keywords": [],
   "author": "",
@@ -18,6 +19,7 @@
     "@aws-sdk/s3-request-presigner": "^3.540.0",
     "amqplib": "^0.10.3",
     "bcrypt": "^5.1.0",
+    "bcryptjs": "^3.0.3",
     "cloudinary": "^2.0.3",
     "crypto": "^1.0.1",
     "dotenv": "^16.4.5",

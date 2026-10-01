@@ -82,7 +82,7 @@ const userSchema = new mongoose.Schema({
         default: '',
     },
     user_phone: {
-        Type: String,
+        type: String,
         default: '',
     },
     user_date_of_birth: {

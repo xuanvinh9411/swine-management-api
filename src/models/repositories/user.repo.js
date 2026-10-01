@@ -11,10 +11,10 @@ const findUserById = ({ user_id, selectPassword = false }) => {
     return query.lean();
 };
 
-const findUserByEmail = ({email, selectPassword = false}) =>{
-    const query = userModel.finOne({user_Email: email});
+const findUserByEmail = async ({email, selectPassword = false}) =>{
+    const query = await UserModel.findOne({user_email: email});
     if (selectPassword) query.select('+user_password');
-    return query.lean();
+    return query ? query.lean() : query ;
 };
 
 const findAllUsers = async ({limit = 20 , page = 1 , filter ={} , sort = { createdAt : -1 } , select = []  }) =>{
@@ -22,7 +22,7 @@ const findAllUsers = async ({limit = 20 , page = 1 , filter ={} , sort = { creat
     const projection = select.length ? Object.fromEntries(select.map((f)=>[f,1]))
                         : { user_password: 0, user_verify_token: 0 , user_resetpassword_token: 0 };
     const [users,total] = await Promise.all[(
-        userModel.find(filter).sort(sort).skip(skip).limit(limit).select(projection)
+        UserModel.find(filter).sort(sort).skip(skip).limit(limit).select(projection)
     )];
     return {users, total};                        
 };
@@ -46,13 +46,13 @@ const updateUserByEmail = ({email, payload}) =>{
 // Update Many 
 
 const banManyUsers = ({user_ids}) =>{
-    return userModel.updateMany(
+    return UserModel.updateMany(
         {_id:{$in: user_ids.map(convertToObjectIdMongdb)}},
         {$set: {user_status: 'banned'}},
     );
 };
 
-const activeManyUser  = async ({user_ids}) =>{
+const activeManyUser  = ({user_ids}) =>{
     return UserModel.updateMany(
             {_id: {$in:user_ids.map(convertToObjectIdMongdb) }},
             {$set:{user_status: 'active'}},
@@ -67,6 +67,11 @@ const softDeleteUserById = ({user_id}) =>{
     );
 };
 
+const findUserByVerifyToken = ({token}) =>{
+    return UserModel.findOne({user_verify_token: token}).select('+user_verify_token').lean()
+
+}
+
 module.exports = {
   createUser,
   findUserById,
@@ -77,4 +82,8 @@ module.exports = {
   updateUserByEmail,
   banManyUsers,
   softDeleteUserById,
+  activeManyUser,
+  findUserByVerifyToken
 };
+
+

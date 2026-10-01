@@ -2,8 +2,8 @@
 
 const apikeyModel = require('../models/apikey.model');
 
-const findByUserId = async(userID)=>{
-    return await apikeyModel.findOne({user: userID});
+const findByUserId = (userID)=>{
+    return  apikeyModel.findOne({user: userID});
 };
 
 exports = {

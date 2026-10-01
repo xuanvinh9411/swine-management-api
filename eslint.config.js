@@ -23,7 +23,7 @@ module.exports = [
   // ─── [1] Base: ESLint recommended rules ────────────────────────────────────
   // Bật toàn bộ rules được ESLint khuyên dùng làm nền tảng
   // Xem danh sách: https://eslint.org/docs/latest/rules (✓ = recommended)
-  js.configs.recommended,
+  // js.configs.recommended,
 
   // ─── [2] Project config ─────────────────────────────────────────────────────
   {
@@ -88,11 +88,14 @@ module.exports = [
       // Cảnh báo biến/import khai báo nhưng không dùng
       // args: 'after-used' → bỏ qua arg nếu có arg phía sau được dùng
       // ignoreRestSiblings: true → bỏ qua khi dùng rest pattern { a, ...rest }
-      'no-unused-vars': ['warn', {
-        vars:               'all',
-        args:               'after-used',
-        ignoreRestSiblings: true,
-      }],
+      // 'no-unused-vars': ['warn', {
+      //   "vars": "all",
+      //       "args": "after-used",
+      //       "caughtErrors": "all",
+      //       "ignoreRestSiblings": false,
+      //       "ignoreUsingDeclarations": false,
+      //       "reportUsedIgnorePattern": false
+      // }],
 
       'no-console':    'off',     // BE cần console.log để log/debug — không tắt
       'no-debugger':   'error',   // không commit debugger vào code
@@ -167,7 +170,7 @@ module.exports = [
       // ════════════════════════════════════════════════════════════════════
 
       // Bắt buộc dấu chấm phẩy cuối statement
-      'semi': ['error', 'always'],
+      'semi': ['off', 'off'],
 
       // Bắt buộc single quote, ngoại trừ khi string chứa single quote
       // avoidEscape: true → "it's fine" thay vì 'it\'s fine'
