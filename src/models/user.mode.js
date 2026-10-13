@@ -1,6 +1,7 @@
 'use strict';
 
 const mongoose = require('mongoose');
+const { type } = require('os');
 const { Schema } = mongoose;
 
 const DOCUMENT_NAME = 'User';
@@ -72,6 +73,11 @@ const userSchema = new mongoose.Schema({
         lowercase: true,
         trim: true,
     },
+    user_slug: {
+      type: String,
+      unique: true,
+      lowercase: true,
+    },
     user_password: {
         type: String,
         required: true,
@@ -119,7 +125,7 @@ const userSchema = new mongoose.Schema({
         select: false,
     },
     user_last_login: {
-        tyde: Date,
+        type: Date,
     },
     user_login_count: {
         type: Number,
@@ -134,6 +140,10 @@ const userSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.Mixed,
         default: {},
     },
+    user_deleted : {
+        type : Boolean,
+        default : false
+    }
 }, {
     timestamps: true,
     collection: COLLECTION_NAME,
@@ -143,6 +153,15 @@ const userSchema = new mongoose.Schema({
 userSchema.index({ user_email: 1 });
 userSchema.index({ user_role: 1 });
 userSchema.index({ user_status: 1 });
+
+// // Compound index — tìm theo shop + status thường xuyên
+// schema.index({ product_shop: 1, isPublished: 1 })
+
+// // Text index — full-text search
+// schema.index({ product_name: 'text', product_description: 'text' })
+
+// // TTL index — tự xóa sau 1 thời gian (dùng cho OTP, session)
+// schema.index({ createdAt: 1 }, { expireAfterSeconds: 900 }) // 15
 
 userSchema.methods.getAllPermissions = function () {
     const rolePermission = ROLE_PERMISSIONS[this.user_role] || [];
@@ -164,6 +183,14 @@ userSchema.methods.toJSON = function () {
     return obj;
 };
 
+userSchema.pre(/^find/, function(){
+    this.where({user_deleted : false})
+})
+
+// virtual — field ảo, không lưu DB
+userSchema.virtual('fullName').get(function () {
+  return `${this.user_name} _ ${this.user_email}`
+})
 module.exports = {
     ROLES,
     PERMISSIONS,

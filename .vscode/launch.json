@@ -6,7 +6,8 @@
       "request": "launch",
       "name": "Debug Nodemon",
       "runtimeExecutable": "nodemon",
-      "program": "${workspaceFolder}/src/server.js",
+      "runtimeArgs": ["--inspect"],
+      "program": "${workspaceFolder}/server.js",
       "envFile": "${workspaceFolder}/.env",
       "console": "integratedTerminal",
       "restart": true,
@@ -16,7 +17,7 @@
       "type": "node",
       "request": "launch",
       "name": "Debug Node",
-      "program": "${workspaceFolder}/src/server.js",
+      "program": "${workspaceFolder}/server.js",
       "envFile": "${workspaceFolder}/.env",
       "console": "integratedTerminal",
       "skipFiles": ["<node_internals>/**"]

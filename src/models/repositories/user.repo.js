@@ -1,4 +1,4 @@
-const { userModel, UserModel } = require('../user.mode');
+const { UserModel } = require('../user.mode');
 const { convertToObjectIdMongdb } = require('../../utils');
 
 const createUser = (payload) => {
@@ -6,7 +6,7 @@ const createUser = (payload) => {
 };
 
 const findUserById = ({ user_id, selectPassword = false }) => {
-    const query = UserModel.fincById(convertToObjectIdMongdb(user_id));
+    const query = UserModel.findById(convertToObjectIdMongdb(user_id));
     if (selectPassword) query.select('+user_password');
     return query.lean();
 };
@@ -14,7 +14,7 @@ const findUserById = ({ user_id, selectPassword = false }) => {
 const findUserByEmail = async ({email, selectPassword = false}) =>{
     const query = await UserModel.findOne({user_email: email});
     if (selectPassword) query.select('+user_password');
-    return query ? query.lean() : query ;
+    return query ? query.lean() : null ;
 };
 
 const findAllUsers = async ({limit = 20 , page = 1 , filter ={} , sort = { createdAt : -1 } , select = []  }) =>{
@@ -33,10 +33,13 @@ const findUserByResetToken = (token) =>{
     });
 };
 
+const findUserBySlug = ({slug}) =>{
+    return UserModel.findOne({user_slug:slug}).lean();
+};
 // Update One
 
 const updateUserById = ({ user_id , payload , isNew = true}) =>{
-    return userModel.findByIdAndUpdate(convertToObjectIdMongdb(user_id),payload,{new: isNew,runValidatiors:true});
+    return UserModel.findByIdAndUpdate(convertToObjectIdMongdb(user_id),payload,{new: isNew,runValidatiors:true});
 };
 
 const updateUserByEmail = ({email, payload}) =>{
@@ -68,8 +71,7 @@ const softDeleteUserById = ({user_id}) =>{
 };
 
 const findUserByVerifyToken = ({token}) =>{
-    return UserModel.findOne({user_verify_token: token}).select('+user_verify_token').lean()
-
+    return  UserModel.findOne({user_verify_token: token}).select('+user_verify_token').lean()
 }
 
 module.exports = {
@@ -83,7 +85,8 @@ module.exports = {
   banManyUsers,
   softDeleteUserById,
   activeManyUser,
-  findUserByVerifyToken
+  findUserByVerifyToken,
+  findUserBySlug
 };
 
 
